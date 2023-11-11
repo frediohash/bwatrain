@@ -4,6 +4,7 @@ import (
 	"bwatrain/user"
 	"log"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -18,13 +19,8 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+	userHandler := user.NewUserHandler(userService)
 
-	userInput := user.RegisterUserInput{}
-	userInput.Name = "Tes simpan dari service"
-	userInput.Email = "contoh@gmail.com"
-	userInput.Occupation = "anak band"
-	userInput.Password = "password"
-
-	userService.RegisterUserInput(userInput)
+	router := gin.Default()
 
 }
