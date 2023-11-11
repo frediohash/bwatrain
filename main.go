@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bwatrain/handler"
 	"bwatrain/user"
 	"log"
 
@@ -19,7 +20,7 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
-	userHandler := user.NewUserHandler(userService)
+	userHandler := handler.NewUserHandler(userService)
 
 	router := gin.Default()
 
