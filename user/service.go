@@ -10,6 +10,7 @@ type Service interface {
 	RegisterUserInput(input RegisterUserInput) (User, error)
 	Login(input LoginInput) (User, error)
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
+	SaveAvatar(ID int, fileLocation string) (User, error)
 }
 
 type service struct {
@@ -65,4 +66,8 @@ func (s *service) IsEmailAvailable(input CheckEmailInput) (bool, error) {
 		return true, err
 	}
 	return true, nil
+}
+
+func (s *service) SaveAvatar(ID int, fileLocation string) (User, error) {
+
 }
