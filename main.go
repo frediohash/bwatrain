@@ -4,6 +4,7 @@ import (
 	"bwatrain/auth"
 	"bwatrain/handler"
 	"bwatrain/user"
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -22,6 +23,17 @@ func main() {
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
+
+	token, err := authService.ValidateToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMX0.b76GC2K6VyRX8t3xPNBp0Lk4XW2bacDyomFNHivBRm4")
+	if err != nil {
+		fmt.Println("ERROR")
+	}
+	if token.Valid {
+		fmt.Println("VALID")
+	} else {
+		fmt.Println("INVALID")
+	}
+
 	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
