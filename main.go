@@ -2,6 +2,7 @@ package main
 
 import (
 	"bwatrain/auth"
+	"bwatrain/campaign"
 	"bwatrain/handler"
 	"bwatrain/helper"
 	"bwatrain/user"
@@ -25,17 +26,17 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaign.NewRepository(db)
+	campaigns, err := campaignRepository.FindByUserID(1)
+	//fmt.Println(len(campaigns))
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
-	token, err := authService.ValidateToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMX0.b76GC2K6VyRX8t3xPNBp0Lk4XW2bacDyomFNHivBRm4")
-	if err != nil {
-		fmt.Println("ERROR")
-	}
-	if token.Valid {
-		fmt.Println("VALID")
-	} else {
-		fmt.Println("INVALID")
+	for _, campaign := range campaigns {
+		//fmt.Println(campaign.Name)
+		if len(campaign.CampaignImages) > 0 {
+			fmt.Println(campaign.CampaignImages[0].FileName)
+		}
 	}
 
 	userHandler := handler.NewUserHandler(userService, authService)
